@@ -1,0 +1,26 @@
+name: Modulo-3 Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar Versao
+        uses: actions/checkout@v5
+
+      - name: Dockerhub Integration
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Imagem
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/modulo-3:latest .
+
+      - name: Deploy Duckerhub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/modulo-3:latest

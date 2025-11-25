@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    function:
+      definition: usuarioCriadoConsumer
+    stream:
+      bindings:
+        usuarioCriadoConsumer-in-0:
+          destination: usuario.criado
+          content-type: application/json
+          group: usuarioCriadoGroup
+      kafka:
+        binder:
+          brokers: ${KAFKA_URL}
+          auto-create-topics: true
+          consumer-properties:
+            auto.offset.reset: earliest
