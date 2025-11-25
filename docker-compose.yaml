@@ -24,6 +24,15 @@ services:
       - zookeeper
     networks:
       - mod3
+  consumer:
+    build: .
+    container_name: mod3-container
+    environment:
+      KAFKA_URL: kafka:9092
+    networks:
+      - mod3
+    depends_on:
+      - kafka
 
 networks:
   mod3:
